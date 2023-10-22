@@ -1,12 +1,18 @@
 package interface_adapter.clear_users;
 
-public class ClearController {
+import use_case.clear_users.ClearInputBoundary;
+import use_case.clear_users.ClearInputData;
+import use_case.clear_users.ClearInteractor;
 
+public class ClearController {
+    final ClearInputBoundary clearInputBoundary;
+    public ClearController(ClearInputBoundary clearinteractor){
+        this.clearInputBoundary = clearinteractor;
+    }
     // Clears all user data
     public boolean clearAllUsers() {
-        // Simulated logic. In a real-world scenario, this would involve
-        // invoking the appropriate service or database operations.
-        System.out.println("All users cleared.");
+        ClearInputData clearInputData = new ClearInputData();
+        clearInputBoundary.clearUsers(clearInputData);
 
         return true; // Assuming the operation is always successful for simplicity.
     }

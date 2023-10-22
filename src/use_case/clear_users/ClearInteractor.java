@@ -11,15 +11,11 @@ public class ClearInteractor implements ClearInputBoundary {
 
     @Override
     public void clearUsers(ClearInputData inputData) {
-        boolean result = dataAccess.clearAllUsers();
+        String result = dataAccess.clearAllUsers();
         ClearOutputData outputData = new ClearOutputData();
-        if (result) {
-            outputData.setSuccess(true);
-            outputData.setMessage("Users cleared successfully.");
-        } else {
-            outputData.setSuccess(false);
-            outputData.setMessage("Failed to clear users.");
-        }
+
+        outputData.setMessage(result);
+
         outputBoundary.receiveClearResult(outputData);
     }
 }

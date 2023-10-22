@@ -1,26 +1,22 @@
 package interface_adapter.clear_users;
 
-public class ClearPresenter {
+import use_case.clear_users.ClearOutputBoundary;
+import use_case.clear_users.ClearOutputData;
 
-    public interface View {
-        void showConfirmationMessage(String message);
-        void showErrorMessage(String message);
+public class ClearPresenter  implements ClearOutputBoundary {
+
+    private final ClearViewModel clearViewModel;
+
+    public ClearPresenter(ClearViewModel clearViewModel) {
+
+        this.clearViewModel = clearViewModel;
+
     }
 
-    private final View view;
-    private final ClearController clearController;
 
-    public ClearPresenter(View view) {
-        this.view = view;
-        this.clearController = new ClearController();
-    }
 
-    public void clearAllUserData() {
-        boolean success = clearController.clearAllUsers();
-        if(success) {
-            view.showConfirmationMessage("All user data cleared.");
-        } else {
-            view.showErrorMessage("Failed to clear user data.");
-        }
+    @Override
+    public void receiveClearResult(ClearOutputData outputData) {
+        clearViewModel.setStatusMessage(outputData.getMessage());
     }
 }

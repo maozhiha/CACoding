@@ -47,6 +47,7 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
+        ClearViewModel clearViewModel = new ClearViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -55,7 +56,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
+        SignupView signupView = SignupUseCaseFactory.create(clearViewModel, viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
@@ -70,18 +71,6 @@ public class Main {
         application.pack();
         application.setVisible(true);
 
-        ClearViewModel clearViewModel = new ClearViewModel();
 
-        // Instantiate the data access object:
-        ClearUserDataAccessInterface dataAccess = new ClearUserDataAccess();
-
-        // Instantiate the Presenter:
-        ClearPresenter clearPresenter = new ClearPresenter(clearViewModel);
-
-        // Instantiate the Interactor, which requires the data access object and the output boundary (the presenter):
-        ClearInteractor clearInteractor = new ClearInteractor(dataAccess, clearPresenter);
-
-        // Instantiate the Controller:
-        ClearController clearController = new ClearController(clearInteractor, clearViewModel);
     }
 }
