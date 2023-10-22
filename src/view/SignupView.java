@@ -82,8 +82,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
-                        ClearPresenter clearPresenter = new ClearPresenter(SignupView.this);
-                        clearPresenter.clearAllUserData();
+                        clearController.executeClear();
+                        String resultMessage = clearViewModel.getStatusMessage();
+                        JOptionPane.showMessageDialog(SignupView.this, resultMessage);
                                     }
                 }
         );

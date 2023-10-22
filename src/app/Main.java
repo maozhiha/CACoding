@@ -2,10 +2,15 @@ package app;
 
 import data_access.FileUserDataAccessObject;
 import entity.CommonUserFactory;
+import interface_adapter.clear_users.ClearController;
+import interface_adapter.clear_users.ClearPresenter;
+import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
+import use_case.clear_users.ClearInteractor;
+import use_case.clear_users.ClearUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import view.LoggedInView;
 import view.LoginView;
@@ -64,5 +69,19 @@ public class Main {
 
         application.pack();
         application.setVisible(true);
+
+        ClearViewModel clearViewModel = new ClearViewModel();
+
+        // Instantiate the data access object:
+        ClearUserDataAccessInterface dataAccess = new ClearUserDataAccess();
+
+        // Instantiate the Presenter:
+        ClearPresenter clearPresenter = new ClearPresenter(clearViewModel);
+
+        // Instantiate the Interactor, which requires the data access object and the output boundary (the presenter):
+        ClearInteractor clearInteractor = new ClearInteractor(dataAccess, clearPresenter);
+
+        // Instantiate the Controller:
+        ClearController clearController = new ClearController(clearInteractor, clearViewModel);
     }
 }
